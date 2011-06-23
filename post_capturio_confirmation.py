@@ -105,18 +105,18 @@ class PostConfirmationHandler(webapp.RequestHandler):
 				self.response.out.write("""
 				Thanks for confirming. You're now fully set up. You can start letting people take a pic of your ID to get your contact information<br/>
 				<br/>
-				PS: We're now in a very closed alpha beta gamma version. Please feel free to email us if you have any trouble using our app.""")
+				PS: We're now in a very closed alpha beta gamma version. Please feel free to email us: crew@captur.io if you have any trouble using our app.""")
 			else:
 				self.response.out.write("""
 				Thanks for confirming. The image of your ID has been added to Captur.io. Now send your vcard to post@captur.io to complete the association!<br/>
 				<br/>
-				PS: We're now in a very closed alpha beta gamma version. Please feel free to email us if you have any trouble using our app.
+				PS: We're now in a very closed alpha beta gamma version. Please feel free to email us: crew@captur.io if you have any trouble using our app.
 				""")
 		else:
 			self.response.out.write("""
 			Thanks for confirming. Your vcard has been added to Captur.io. Now send an image of your ID to post@captur.io to complete the association.<br/>
 			<br/>
-			PS: We're now in a very closed alpha beta gamma version. Please feel free to email us if you have any trouble using our app.
+			PS: We're now in a very closed alpha beta gamma version. Please feel free to email us: crew@captur.io if you have any trouble using our app.
 			""")
 		
 
