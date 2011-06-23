@@ -59,6 +59,7 @@ class PostConfirmationHandler(webapp.RequestHandler):
 		if(existingUser):
 			user = existingUser
 			user.label =  self.usertemp.label
+			oldVcardRef = user.vcardRef
 			oldImageRef= user.imageRef
 			if(oldImageRef):
 				oldImageRefID = str(oldImageRef.key().id())
@@ -91,6 +92,10 @@ class PostConfirmationHandler(webapp.RequestHandler):
 		if(self.usertemp.vcardRef):
 			# We replace the old vcard Ref/ (or if not found) by the new vcard Ref
 			user.vcardRef = self.usertemp.vcardRef
+			
+			# If there was an old vcard ref, we have to delete it from to datastore
+			if(oldVcardRef):
+				oldVcardRef.delete()
 
 		user.put()
 		self.usertemp.delete()
