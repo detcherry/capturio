@@ -1,9 +1,10 @@
-import logging
+import logging, os
 
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.ext import db
 from google.appengine.ext import blobstore
+from google.appengine.ext.webapp import template
 
 from models.user import User
 from models.usertemp import Usertemp
@@ -33,11 +34,13 @@ class PostConfirmationHandler(webapp.RequestHandler):
 				
 			else:
 				logging.info("Confimation link invalid")
-				self.response.out.write("Invalid confirmation link. Please retry")
+				path = os.path.join(os.path.dirname(__file__), 'templates/post/invalid_link.html')
+				self.response.out.write(template.render(path, None))
 		
 		else:
 			logging.info("Confimation link invalid")
-			self.response.out.write("Invalid confirmation link. Please retry.")
+			path = os.path.join(os.path.dirname(__file__), 'templates/post/invalid_link.html')
+			self.response.out.write(template.render(path, None))
 
 	#This function retrieves the usertemp data (if it hadn't been already deleted)
 	def retrieveUsertemp(self):
@@ -48,7 +51,8 @@ class PostConfirmationHandler(webapp.RequestHandler):
 			self.saveUsertemp()
 		else:
 			logging.info("No usertemp found. This operation has certainly already been confirmed")
-			self.response.out.write("This operation has already been confirmed.")
+			path = os.path.join(os.path.dirname(__file__), 'templates/post/already_confirmed.html')
+			self.response.out.write(template.render(path, None))
 
 	# This function saves the new user information in the database
 	def saveUsertemp(self):
@@ -100,24 +104,17 @@ class PostConfirmationHandler(webapp.RequestHandler):
 
 		user.put()
 		self.usertemp.delete()
+		
+		path = None
 		if(user.imageRef):
 			if(user.vcardRef):
-				self.response.out.write("""
-				Thanks for confirming. You're now fully set up. You can start letting people take a pic of your ID to get your contact information<br/>
-				<br/>
-				PS: We're now in a very closed alpha beta gamma version. Please feel free to email us: crew@captur.io if you have any trouble using our app.""")
+				path = os.path.join(os.path.dirname(__file__), 'templates/post/all_set.html')
 			else:
-				self.response.out.write("""
-				Thanks for confirming. The image of your ID has been added to Captur.io. Now send your vcard to post@captur.io to complete the association!<br/>
-				<br/>
-				PS: We're now in a very closed alpha beta gamma version. Please feel free to email us: crew@captur.io if you have any trouble using our app.
-				""")
+				path = os.path.join(os.path.dirname(__file__), 'templates/post/almost_set_vcard_missing.html')
 		else:
-			self.response.out.write("""
-			Thanks for confirming. Your vcard has been added to Captur.io. Now send an image of your ID to post@captur.io to complete the association.<br/>
-			<br/>
-			PS: We're now in a very closed alpha beta gamma version. Please feel free to email us: crew@captur.io if you have any trouble using our app.
-			""")
+			path = os.path.join(os.path.dirname(__file__), 'templates/post/almost_set_image_missing.html')
+		
+		self.response.out.write(template.render(path, None))
 		
 
 application = webapp.WSGIApplication([
