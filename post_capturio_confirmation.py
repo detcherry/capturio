@@ -66,6 +66,7 @@ class PostConfirmationHandler(webapp.RequestHandler):
 			logging.info("User found: %s, %s" % (user.label, user.mail))
 		else:
 			user = User()
+			oldVcardRef = None
 			oldImageRef = None
 			user.label =  self.usertemp.label
 			user.mail = self.usertemp.mail
