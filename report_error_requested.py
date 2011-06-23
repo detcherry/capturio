@@ -1,8 +1,9 @@
-import logging
+import logging, os
 
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.ext import db
+from google.appengine.ext.webapp import template
 
 from models.image_recognition import ImageRecognition
 from encryption import Encryption
@@ -29,11 +30,13 @@ class ReportErrorRequestedHandler(webapp.RequestHandler):
 				
 			else:
 				logging.info("Error reporting link invalid")
-				self.response.out.write("Invalid error reporting link. Please retry")
+				path = os.path.join(os.path.dirname(__file__), 'templates/report_error/invalid_link.html')
+				self.response.out.write(template.render(path, None))
 		
 		else:
 			logging.info("Error reporting link invalid")
-			self.response.out.write("Invalid error reporting link. Please retry.")		
+			path = os.path.join(os.path.dirname(__file__), 'templates/report_error/invalid_link.html')
+			self.response.out.write(template.render(path, None))	
 
 	# This function retrieves the recognition event
 	def retrieveRecognition(self):
@@ -44,15 +47,17 @@ class ReportErrorRequestedHandler(webapp.RequestHandler):
 			self.putErrorToTrue()
 		else:
 			logging.warning("No recognition event retrieved. The link was valid but nothing came out of the DB. Something went wrong...")
-			self.response.out.write("Sorry but we didn't find anything matching your request.")
+			path = os.path.join(os.path.dirname(__file__), 'templates/report_error/nothing_found.html')
+			self.response.out.write(template.render(path, None))
 	
 	# This function puts the error according to the requester to true
 	def putErrorToTrue(self):
 		self.recognition.errorRequested = True;
 		self.recognition.put()
 		logging.info("The errorRequested field is now True")
-		self.response.out.write("Sorry for this matching error. It's a really exceptional event. We'll investigate this and get back to you as soon as possible. Thanks for reporting this problem and help us improve our service.")
-
+		path = os.path.join(os.path.dirname(__file__), 'templates/report_error/error_reported.html')
+		self.response.out.write(template.render(path, None))
+		
 application = webapp.WSGIApplication([
 	("/reportrequested", ReportErrorRequestedHandler)
 ], debug=True)
