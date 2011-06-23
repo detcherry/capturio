@@ -1,9 +1,10 @@
-import logging
+import logging, os
 
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.ext import db
 from google.appengine.ext import blobstore
+from google.appengine.ext.webapp import template
 
 from models.user import User
 from models.usertemp import Usertemp
@@ -30,12 +31,14 @@ class DeleteConfirmationHandler(webapp.RequestHandler):
 				logging.info("Deletion link valid")
 				self.retrieveUser()
 			else:
-				logging.info("Deletion link invalid")
-				self.response.out.write("Invalid deletion link. Please retry.")				
+				logging.info("Deletion link invalid")		
+				path = os.path.join(os.path.dirname(__file__), 'templates/delete/invalid_link.html')
+				self.response.out.write(template.render(path, None))			
 			
 		else:
 			logging.info("Deletion link invalid")
-			self.response.out.write("Invalid deletion link. Please retry.")
+			path = os.path.join(os.path.dirname(__file__), 'templates/delete/invalid_link.html')
+			self.response.out.write(template.render(path, None))
 			
 	def retrieveUser(self):
 		userKey = db.Key.from_path("User", int(self.userID))
@@ -46,7 +49,8 @@ class DeleteConfirmationHandler(webapp.RequestHandler):
 			self.deleteUser()
 		else:
 			logging.info("No user found. This deletion has certainly already been confirmed")
-			self.response.out.write("This operation has already been confirmed.")
+			path = os.path.join(os.path.dirname(__file__), 'templates/delete/already_confirmed.html')
+			self.response.out.write(template.render(path, None))
 	
 	def deleteUser(self):
 				
@@ -74,9 +78,9 @@ class DeleteConfirmationHandler(webapp.RequestHandler):
 		
 		self.user.delete()
 		logging.info("User has been removed from Captur.io")
-		
-		self.response.out.write("Your information has been removed from Captur.io. We hope to see you again soon though.")
-		
+		path = os.path.join(os.path.dirname(__file__), 'templates/delete/information_removed.html')
+		self.response.out.write(template.render(path, None))
+				
 application = webapp.WSGIApplication([
 	("/delete", DeleteConfirmationHandler)
 ], debug=True)
