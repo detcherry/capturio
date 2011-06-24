@@ -27,11 +27,11 @@ class IncomingMailHandler():
 		if(mailWithLabelEncoding):
 			mailWithLabelDecoded = mailWithLabelEncoded.decode(mailWithLabelEncoding)
 		else:
-			mailWithLabelDecoded = mailWithLabelEncoded
+			mailWithLabelDecoded = mailWithLabelEncoded.decode()
 		
 		logging.info("MailWithLabelDecoded: "+ mailWithLabelDecoded)
 		
-		mailRegexMatch = re.search(r'[\w\-][\w\-\.]+@[\w\-][\w\-\.]+[a-zA-Z]{1,4}', mailWithLabelDecoded)
+		mailRegexMatch = re.search(u'[\w\-][\w\-\.]+@[\w\-][\w\-\.]+[a-zA-Z]{1,4}', mailWithLabelDecoded)
 		mail = mailRegexMatch.group()
 		
 		labelRegex = re.compile("<"+mail+">")
