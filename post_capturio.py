@@ -21,6 +21,19 @@ from post_capturio_mail import PostMailHandler
 from encryption import Encryption
 from moodstocks import Moodstocks
 
+from google.appengine.api.mail import _EmailMessageBase
+def fix_check_attachment( func ):
+       def fixed_check_attachment( self, attachment ):
+               logging.debug( "run fix_check_attachment" )
+               file_name, data = attachment
+               if isinstance( file_name, tuple ) and len( file_name ) == 3:
+                       func( self, ( file_name[ 2 ], data ) )
+               else:
+                       func( self, attachment )
+       return fixed_check_attachment
+
+_EmailMessageBase._check_attachment = fix_check_attachment( _EmailMessageBase._check_attachment )
+
 class PostCapturioHandler(InboundMailHandler):
 			
 	def receive(self, message):

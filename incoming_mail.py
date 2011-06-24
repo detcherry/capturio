@@ -44,7 +44,7 @@ class IncomingMailHandler():
 			filename = attachment[0]			
 			UTF8Filename = ""
 			
-			# According the RF2047
+			# According the RFC2047
 			# Example: =?ISO-8859-1?Q?Rapha=EBl_Labb=E9=2Evcf?=
 			if isinstance(filename, str):
 				listWithEncodedFilenameAndEncoding = email.header.decode_header(filename)				
@@ -61,7 +61,7 @@ class IncomingMailHandler():
 				else:
 					UTF8Filename = encodedFilename.decode()
 								
-			# I've also accountered tuples...
+			# According the RFC2231
 			# Example: ('utf-8', '', 'C\xc3\xa9dric Deltheil.vcf')
 			else:
 				tupleWithEncodedFilenameAndEncoding = filename
