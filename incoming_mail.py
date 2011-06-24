@@ -16,11 +16,26 @@ class IncomingMailHandler():
 		return numberOfAttachments
 	
 	def extractMailAndLabel(self):
-		mailRegexMatch = re.search(r'[\w\-][\w\-\.]+@[\w\-][\w\-\.]+[a-zA-Z]{1,4}', self.mailWithLabel)
+		
+		logging.info("MailWithLabel: " + self.mailWithLabel)
+		
+		listWithMailAndLabelAndEncoding = email.header.decode_header(self.mailWithLabel)
+		tupleWithMailAndLabelAndEncoding = listWithMailAndLabelAndEncoding[0]
+		mailWithLabelEncoded = tupleWithMailAndLabelAndEncoding[0]
+		mailWithLabelEncoding = tupleWithMailAndLabelAndEncoding[1]
+		
+		if(mailWithLabelEncoding):
+			mailWithLabelDecoded = mailWithLabelEncoded.decode(mailWithLabelEncoding)
+		else:
+			mailWithLabelDecoded = mailWithLabelEncoded
+		
+		logging.info("MailWithLabelDecoded: "+ mailWithLabelDecoded)
+		
+		mailRegexMatch = re.search(r'[\w\-][\w\-\.]+@[\w\-][\w\-\.]+[a-zA-Z]{1,4}', mailWithLabelDecoded)
 		mail = mailRegexMatch.group()
 		
 		labelRegex = re.compile("<"+mail+">")
-		label = labelRegex.sub("",self.mailWithLabel)
+		label = labelRegex.sub("",mailWithLabelDecoded)
 		
 		mailAndLabel = (mail,label)	
 		
