@@ -29,7 +29,7 @@ We're sorry but we did not recognize the extension of your image. Please make su
 		elif(typeOfResponse == "noMatchingImage"):
 			self.responseMail.subject = "We didn't find any vcard associated with your image"
 			self.responseMail.body = """
-We're sorry but we did not find any vcard associated with your image. Please retry with a picture with more light and/or precision.
+We're sorry but we don't know this image. Please retry with a picture with more light and/or precision.
 			"""
 		elif(typeOfResponse == "noVcardAssociated"):		
 			self.responseMail.subject = "The user we found did not associate any vcard"
