@@ -28,29 +28,29 @@ We're sorry but we received too many files from you. We don't know which one to 
 We're sorry but we didn't find any image (.jpg, .jpeg, .png, .gif) or vcard (.vcf) in your last email. Please double check the files you submitted and send us only one image of your ID and one vcard in the formats mentioned earlier.
 			"""
 		elif(typeOfResponse == "newImageNewVcard"):
-			self.responseMail.subject = "[Confirmation] Your ID image and your vcard linked together with Captur.io"
+			self.responseMail.subject = "[Confirmation] Your ID image and your vcard linked together with Capturio"
 			self.responseMail.body = """
-Your ID image and your vcard have just been linked together with Captur.io. Please, click the following link to confirm: %s
+Your ID image and your vcard have just been linked together with Capturio. Please, click the following link to confirm: %s
 			""" % (URL)
 		elif(typeOfResponse == "newImageNoVcardAndMissing"):
-			self.responseMail.subject = "[Confirmation] New ID image in your Captur.io profile. Send now your vcard to post@captur.io"
+			self.responseMail.subject = "[Confirmation] New ID image in your Capturio profile. Send now your vcard to post@captur.io"
 			self.responseMail.body = """
-A new ID image has just been saved into your Captur.io profile. Please, click the following link to confirm: %s
+A new ID image has just been saved into your Capturio profile. Please, click the following link to confirm: %s
 			""" % (URL)
 		elif(typeOfResponse == "newImageNoVcardButOk"):
-			self.responseMail.subject = "[Confirmation] New ID image in your Captur.io profile"
+			self.responseMail.subject = "[Confirmation] New ID image in your Capturio profile"
 			self.responseMail.body = """
-A new ID image has just been saved into your Captur.io profile. Please, click the following link to confirm: %s
+A new ID image has just been saved into your Capturio profile. Please, click the following link to confirm: %s
 			"""	% (URL)		
 		elif(typeOfResponse == "noImageAndMissingNewVcard"):
-			self.responseMail.subject = "[Confirmation] New vcard in your Captur.io profile. Send now an image of your ID to post@captur.io"
+			self.responseMail.subject = "[Confirmation] New vcard in your Capturio profile. Send now an image of your ID to post@captur.io"
 			self.responseMail.body = """
-A new vcard has just been saved into your Captur.io profile. Please, click the following link to confirm: %s
+A new vcard has just been saved into your Capturio profile. Please, click the following link to confirm: %s
 			""" % (URL)
 		elif(typeOfResponse == "noImageButOkNewVcard"):
-			self.responseMail.subject = "[Confirmation] New vcard in your Captur.io profile"
+			self.responseMail.subject = "[Confirmation] New vcard in your Capturio profile"
 			self.responseMail.body = """
-A new vcard has just been saved into your Captur.io profile. Please, click the following link to confirm: %s
+A new vcard has just been saved into your Capturio profile. Please, click the following link to confirm: %s
 			""" % (URL)	
 		elif(typeOfResponse == "error"):
 			self.responseMail.subject = "An error occurred"

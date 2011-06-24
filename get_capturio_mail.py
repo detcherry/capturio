@@ -37,7 +37,7 @@ We're sorry but we did not find any vcard associated with your image. Please ret
 We're sorry but the user matching your image did not associate any vcard. We'll ping him so that he'll input this information!
 			"""	
 		elif(typeOfResponse == "vcardAttached"):
-			self.responseMail.subject = "[Captur.io rocks] Please find attached the vcard you requested"
+			self.responseMail.subject = "[Capturio rocks] Please find attached the vcard you requested"
 			self.responseMail.body = """
 Please find attached the vcard associated with the image you sent earlier. Isn't it magical? Feel free to send us other images. 
 
@@ -72,7 +72,7 @@ PS: If your vcard is not associated yet with your ID, send both to post@captur.i
 		if(typeOfResponse == "justCapturedRequesterWithVcard"):
 			self.responseMail.subject = "You have been captured by another person on Captur.io"
 			self.responseMail.body = """
-The following person: %s (%s) captured you with Captur.io! He just receives your vcard because you have probably shown him your ID! Please find also attached his own vcard.
+The following person: %s (%s) captured you with Capturio! He just receives your vcard because you have probably shown him your ID! Please find also attached his own vcard.
 
 If you think there is an error, please click the following link to report it: %s. Our team will take a look at it ASAP. Thanks for helping us improve our service.
 			""" % (label, mail, url)
@@ -80,7 +80,7 @@ If you think there is an error, please click the following link to report it: %s
 		elif(typeOfResponse == "justCapturedRequesterWithoutVcard"):
 			self.responseMail.subject = "You have been captured by another person on Captur.io"
 			self.responseMail.body = """
-The following person: %s (%s) captured you with Captur.io! He just receives your vcard because you have probably shown him your ID!
+The following person: %s (%s) captured you with Capturio! He just receives your vcard because you have probably shown him your ID!
 
 If you think there is an error, please click the following link to report it: %s. Our team will take a look at it ASAP. Thanks for helping us improve our service.
 			""" % (label, mail, url)
@@ -91,7 +91,7 @@ Hey,
 		signature = """
 Ping us soon again!
 
-Captur.io's crew
+Capturio's crew
 		"""
 
 		self.responseMail.body = hello + self.responseMail.body + signature	
