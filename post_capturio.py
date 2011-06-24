@@ -171,8 +171,12 @@ class PostCapturioHandler(InboundMailHandler):
 		if(self.vcardContent):
 			
 			vcard = VcardStorage()
-			vcard.content = self.vcardContent			
 			vcard.name = self.vcardName
+			try:
+				vcard.content = self.vcardContent		
+			except:
+				logging.info("We have to encode it in UTF-8")
+				vcard.content = self.vcardContent.encode("utf-8")
 			vcard.put()
 			
 			vcardKey = vcard.key()

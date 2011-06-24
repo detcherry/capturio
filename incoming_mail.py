@@ -79,8 +79,6 @@ class IncomingMailHandler():
 				encodedVcardData = attachment[1]
 				vcardContent = encodedVcardData.decode()
 				
-				logging.info(vcardContent)
-				
 				vcard = (vcardName, vcardContent)
 		
 		return vcard
