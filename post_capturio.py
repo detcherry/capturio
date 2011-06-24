@@ -74,18 +74,20 @@ class PostCapturioHandler(InboundMailHandler):
 	# This function instantiates the image and vcard (if found in the mail)	and calls the image checking function
 	def initAttachments(self):
 		
+		error = False
+		
 		# We instantiate the vcard
 		try:
 			vcard = self.incomingMailHandler.getVcardNameAndContent()		
 		except Exception, e:
 			logging.info("Something went wrong with the processing of the vcard in the mail attachments")
 			logging.error(e)
-			vcardNameAndContent = None
+			vcard = None
+			error = True
 		
 		if(vcard):
 			self.vcardName = vcard[0]			
 			self.vcardContent = vcard[1]
-			logging.info("Vcard OK (name: "+ self.vcardName + ")")	
 		
 		# We instantiate the image
 		try:
@@ -94,12 +96,16 @@ class PostCapturioHandler(InboundMailHandler):
 			logging.info("Something went wrong with the processing of the image in the mail attachments")
 			logging.error(e)
 			imageContent = None
+			error = True
 		
-		# If no picture and no vcard have been found in the attachments, we send a warning mail. Otherwise, we handle them
-		if(not(self.imageContent) and not(self.vcardContent)):
-			self.responseHandler.sendResponse("noImageNoVcard")
+		if(not(error)):
+			# If no picture and no vcard have been found in the attachments, we send a warning mail. Otherwise, we handle them
+			if(not(self.imageContent) and not(self.vcardContent)):
+				self.responseHandler.sendResponse("noImageNoVcard")
+			else:
+				self.saveUsertemp()
 		else:
-			self.saveUsertemp()
+			self.responseHandler.sendResponse("error")
 	
  	# It's high time saving the user with its new information in an entity called "usertemp"
 	def saveUsertemp(self):

@@ -17,21 +17,16 @@ class IncomingMailHandler():
 	
 	def extractMailAndLabel(self):
 		
-		logging.info("MailWithLabel: " + self.mailWithLabel)
-		
-		listWithMailAndLabelAndEncoding = email.header.decode_header(self.mailWithLabel)
-		tupleWithMailAndLabelAndEncoding = listWithMailAndLabelAndEncoding[0]
-		mailWithLabelEncoded = tupleWithMailAndLabelAndEncoding[0]
-		mailWithLabelEncoding = tupleWithMailAndLabelAndEncoding[1]
+		mailWithLabelTuple = email.header.decode_header(self.mailWithLabel)[0]
+		mailWithLabelEncoded = mailWithLabelTuple[0]
+		mailWithLabelEncoding = mailWithLabelTuple[1]
 		
 		if(mailWithLabelEncoding):
 			mailWithLabelDecoded = mailWithLabelEncoded.decode(mailWithLabelEncoding)
 		else:
 			mailWithLabelDecoded = mailWithLabelEncoded.decode()
 		
-		logging.info("MailWithLabelDecoded: "+ mailWithLabelDecoded)
-		
-		mailRegexMatch = re.search(u'[\w\-][\w\-\.]+@[\w\-][\w\-\.]+[a-zA-Z]{1,4}', mailWithLabelDecoded)
+		mailRegexMatch = re.search(r'[\w\-][\w\-\.]+@[\w\-][\w\-\.]+[a-zA-Z]{1,4}', self.mailWithLabel)
 		mail = mailRegexMatch.group()
 		
 		labelRegex = re.compile("<"+mail+">")
@@ -45,13 +40,14 @@ class IncomingMailHandler():
 		vcard = None
 		
 		for attachment in self.attachments:
-			filename = attachment[0]
+			
+			filename = attachment[0]			
 			UTF8Filename = ""
 			
 			# According the RF2047
 			# Example: =?ISO-8859-1?Q?Rapha=EBl_Labb=E9=2Evcf?=
 			if isinstance(filename, str):
-				listWithEncodedFilenameAndEncoding = email.header.decode_header(filename)
+				listWithEncodedFilenameAndEncoding = email.header.decode_header(filename)				
 				tupleWithEncodedFilenameAndEncoding = listWithEncodedFilenameAndEncoding[0]
 				
 				# After this operation we have a tuple like this
@@ -59,12 +55,12 @@ class IncomingMailHandler():
 				
 				encodedFilename = tupleWithEncodedFilenameAndEncoding[0]
 				encoding = tupleWithEncodedFilenameAndEncoding[1]
-				
+								
 				if(encoding):
 					UTF8Filename = encodedFilename.decode(encoding)
 				else:
-					UTF8Filename = encodedFilename
-			
+					UTF8Filename = encodedFilename.decode()
+								
 			# I've also accountered tuples...
 			# Example: ('utf-8', '', 'C\xc3\xa9dric Deltheil.vcf')
 			else:
@@ -78,14 +74,13 @@ class IncomingMailHandler():
 			if(filetype == ".vcf"):
 				vcardName = UTF8Filename
 				
+				logging.info(vcardName)
+				
 				encodedVcardData = attachment[1]
-				vcardPayload = encodedVcardData.payload
-				vcardEncoding = encodedVcardData.encoding
+				vcardContent = encodedVcardData.decode()
 				
-				if(vcardEncoding):
-					decodedVcard = vcardPayload.decode(vcardEncoding)
+				logging.info(vcardContent)
 				
-				vcardContent = decodedVcard.encode("utf-8")
 				vcard = (vcardName, vcardContent)
 		
 		return vcard
