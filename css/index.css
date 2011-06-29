@@ -1,0 +1,123 @@
+h1#tagline{
+	margin-top:50px;
+	margin-bottom:70px;
+	width:40%;
+	font-size:36px;
+	color:#FF706A;
+}
+
+#try_section{
+	width:37%;
+	margin-bottom:70px;
+	padding-left:3%;
+}
+
+#try_section h1{
+	margin:0px;
+	margin-bottom:8px;
+	font-family: Lato, Helvetica, sans-serif;
+	font-size:22px;
+	font-style:italic;
+	font-weight:bold;
+}
+
+#try_section img{
+	float:left;
+	margin-left:6px;
+	margin-right:6px;
+	padding-top:8px;
+}
+
+#try_section p{
+	margin:0px;
+	padding:8px;
+	font-family: Lato, Helvetica, sans-serif;
+	font-size:22px;
+	font-style:italic;
+}
+
+#try_section strong{
+	font-family: Lato, Helvetica, sans-serif;
+	font-weight:bold;	
+}
+
+.fb_iframe_widget{
+	float:left;
+	margin-top:8px;
+	margin-left:8px;
+	padding-top:8px;
+}
+
+#follow_button{
+	margin-top:8px;
+	margin-left:8px;
+	padding:8px;
+	width:100px;
+}
+
+
+/*---- CATCH PHRASE BELOW PICTURE ----*/
+
+#explanations_section{
+	width:100%;
+}
+
+#explanations_section h1{
+	float:left;
+	margin:0px;
+	font-size:24px;
+}
+
+h1#left{
+	padding:8px;
+	padding-left:23%;
+}
+
+h1#right{
+	margin-left:3%;
+	padding:8px;
+	color:white;
+	background-color:#FF706A;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	border-radius: 8px;
+}
+
+h1#right a, h1#right a:active, h1#right a:visited{
+	text-decoration:none;
+	color:white;	
+}
+
+h1#right a:hover{
+	text-decoration:underline;
+}
+
+/*---------- EXPLANATION BLOCK ------------*/
+
+.explanations_block{
+	margin-top:50px;
+	width:33%;
+}
+
+.explanations_block h1{
+	padding-left:10%;
+	padding-right:10%;
+	padding-bottom:20px;
+	width:80%;
+}
+
+.explanations_block p{
+	padding-left:10%;
+	padding-right:10%;
+	width:80%;
+}
+
+.explanations_block a{
+	display:block;
+	padding-left:10%;
+	padding-right:10%;
+	width:80%;
+}
+
+
+

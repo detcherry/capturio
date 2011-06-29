@@ -1,0 +1,28 @@
+footer{
+	float:left;
+	width:100%;	
+}
+
+#footer_top{
+	padding-top:50px;
+	padding-bottom:30px;
+	width:100%;
+	text-align:center;
+	font-family: LatoLight, Helvetica, sans-serif;
+	font-size:20px;
+	border-bottom: 1px solid #BCBCBC;
+}
+
+#footer_bottom{
+	padding-top:30px;
+	padding-bottom:20px;
+	width:100%;
+	text-align:center;
+}
+
+#footer_bottom a, #footer_bottom a:active, #footer_bottom a:visited{
+	padding-left:8px;
+	padding-right:8px;
+	text-decoration:none;
+	color:#2E2C2D;
+}

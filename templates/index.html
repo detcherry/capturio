@@ -1,57 +1,45 @@
-{% extends "base.html"}
+{% extends "base.html" %}
+
+{% block header_right %}
+<!-- No header menu on the front page -->
+{% endblock %}
+
 {% block content %}
-	<h1>TURN ANYTHING INTO A BUSINESS CARD</h1>
+<h1 id="tagline">TURN ANYTHING INTO A BUSINESS CARD!</h1>
+<div id="try_section">
+	<h1>Try it now!</h1>
+	<img alt="capturio_camera" src="/images/camera.png"><p>take a picture of this T-shirt</p>
+	<img alt="capturio_mail" src="/images/mail.png"><p>send it to <strong>get@captur.io</strong></p>
+	<img alt="capturio_vcard" src="/images/inbox.png" style="padding:2px;"><p>receive instantly Damien's vcard</p>
+	<div id="fb-root"></div><script src="http://connect.facebook.net/en_US/all.js#appId=133582846720405&amp;xfbml=1"></script><fb:like href="https://www.facebook.com/pages/Capturio/194512217262382" send="true" layout="button_count" show_faces="false"></fb:like>
 	<div id="follow_button"><a href="http://twitter.com/capturio" class="twitter-follow-button" data-show-count="false">Follow @capturio</a>
 	<script src="http://platform.twitter.com/widgets.js" type="text/javascript"></script></div>
-	<p id="subtitle">(Right now: in very closed private alpha beta gamma version)</p>
-	<h2>WHAT IS CAPTURIO?</h2>
-	<p>Captur.io is an application where you <strong>send an image of a person’s object</strong> (his capturio object) by email and
-		 <strong>receive instantly the vcard</strong> that he had linked with it.</p>
-	<p>With Capturio, you can:<br/>
-		- <strong>Associate</strong> any personal and original object (business card, student ID or even your t-shirt, tattoo...etc)
-		to your vcard<br/>
-		- <strong>Receive</strong> by email people’s vcard by taking a picture of their personal Capturio object.
-	</p>
-	<h2>HOW DOES IT WORK?</h2>
-	<h3>How to associate my personal object to my vcard?</h3>
-	<p>
-		- Take a picture of one of your <strong>personal and original</strong> object
-		 (it can be <strong>ANYTHING</strong>)<br/>
-		- Send your pic by email to <strong>post@captur.io</strong><br/>
-		- Send also your vcard to <strong>post@captur.io</strong>. (You can do both separately or at the same time)<br/>
-	  You're all set! You can start letting people taking a pic of your capturio object to receive your vcard.</p>
-	<h3>How to retrieve people's vcard?</h3>
-	<p>
-		- Take a picture of <strong>someone's capturio object</strong>.<br/>
-		- Send it to <strong>ping@captur.io</strong><br/>
-		- You'll receive instantly his vcard!
-	</p>
-<!-- 
-	<h3>How to edit my captur.io object or vcard</h3>
-	<p>You just have to send an email with your new captur.io object and/ or new vcard to <strong>post@captur.io</strong></p>
-	<h3>How to delete my account?</h3>
-	<p>Just send an email to <strong>delete@captur.io</strong></p>
--->
-	<h2>ABOUT CAPTURIO</h2>
-	<h3>OUR TECH RECOGNIZES IMAGES</h3>
-<!--	<p>
-		That’s how we do <strong>this magic trick</strong>.You send an image and you receive a vcard. 
-		In the middle there are highly accurate, highly robust, highly fast algorithms that had been developed for years.
-	</p>
--->
-	<h3>YOU CAN LINK WHATEVER YOU WANT</h3>
-<!--	<p>Business card, driving license, student ID, or maybe <strong>something funnier and more personal</strong> like a car plate, a tattoo or a t-shirt!!</p>
--->
-	<h3>IT’S CROSS PLATFORM</h3>
-<!--	<p>You just need <strong>a camera and email</strong> in your phone! So it works on iPhone, Android, Blackberry, and more</p>
--->
-	<h3>IT’S DEAD SIMPLE LIKE EMAIL</h3>
-<!--	<p>
-		Send your vcard and a pic of your object to <strong>post@captur.io</strong> to set up your profile.<br/>
-		Send a pic of someone’s object to <strong>ping@captur.io</strong> and receive instantly his vcard by email.<br/>
-	</p>
--->
-	<h3>IT’S FREE, THERE IS NO SIGN UP</h3>
-<!--	<p>Why don’t you get started?</p>
--->
+</div>
+<div id="explanations_section">
+	<h1 id="left">Wanna do like Damien?</h1><h1 id="right"><a href="/how_to_get_set_up">SEE HOW TO GET SET UP</a></h1>
+	<div class="explanations_block">
+		<h1>WHAT IS CAPTURIO?</h1>
+		<p>
+			Capturio is an application where you send an image of a person’s object by email
+			 and receive instantly the vcard that he had linked with it.
+		</p>
+		<a href="/what_is_capturio">Discover Capturio</a>
+	</div>
+	<div class="explanations_block">
+		<h1>HOW TO GET SET UP?</h1>
+		<p>
+			Send a pic of one of your personal and original object plus your vcard to post@captur.io 
+			and you’ll be all set! Start sharing.
+		</p>
+		<a href="/how_to_get_set_up">See how Capturio works</a>
+	</div>
+	<div class="explanations_block">
+		<h1>WHO IS USING IT?</h1>
+		<p>
+			Entrepreneurs, developers, designers link their business cards, logos, visuals.
+			Some even add their t-shirts or tattoos! Capturio is limitless.
+		</p>
+		<a href="/use_cases">Look at Capturio use cases</a>
+	</div>
+</div>
 {% endblock %}

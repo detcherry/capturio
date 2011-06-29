@@ -1,0 +1,82 @@
+/* ------- GENERAL STYLE OF SECONDARY PAGES ------- */
+
+#secondary_section{
+	width:100%;
+}
+
+#secondary_section h1{
+	float:left;
+	width:100%;
+	margin-top:40px;
+	color:#FF706A;
+}
+
+#secondary_section #text{
+	width:55%;
+}
+
+#secondary_section h2{
+	margin-top:30px;
+}
+
+#secondary_section span{
+	color:#FF706A;
+}
+
+/* ------------- TUTORIAL SECTION ---------------- */
+
+.tutorial{
+	width:100%;
+}
+
+.tutorial h1{
+	float:left;
+	margin-top:50px;
+	margin-bottom:40px;
+	width:100%;
+	text-align:center;
+	color:#FF706A;
+}
+
+.tutorial_step_short{
+	float:left;
+	width:30%;
+}
+
+.tutorial_step_large{
+	float:left;
+	width:40%;
+}
+
+.tutorial h2{
+	float:left;
+	margin:0px;
+	margin-left:10%;
+	margin-right:10%;
+	width:72%;
+	padding-left:4%;
+	padding-right:4%;
+	padding-top:16px;
+	padding-bottom:16px;
+	text-align:center;
+	color:white;
+	background-color:#7F8785;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	border-radius: 8px;
+}
+
+.tutorial p{
+	float:left;
+	margin-left:20%;
+	margin-right:20%;
+	width:60%;	
+	text-align:center;
+}
+
+#go_to_faq{
+	float:left;
+	width:100%;
+	margin-top:40px;
+	text-align:center;
+}

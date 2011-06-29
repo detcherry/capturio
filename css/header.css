@@ -1,0 +1,49 @@
+header{
+	float:left;
+	margin-top:20px;
+	width:100%;
+}
+
+/* ---------- HEADER LEFT ------------- */
+
+#header_left{
+	height:70px;
+}
+
+#header_left img{
+	float:left;
+	margin-right:4px;
+	padding-top:1px;
+}
+
+#header_left h1{
+	margin:0px;
+	margin-bottom:6px;
+	font-size:28px;
+	font-weight:normal;
+}
+
+#header_left h1 a{
+	color:#2E2C2D;
+	text-decoration:none;
+}
+
+#header_left h2{
+	margin:0px;
+	font-family: LatoLight, Helvetica, sans-serif;
+	font-size:16px;
+	font-weight:normal;
+}
+
+/* ---------- HEADER RIGHT ------------- */
+
+#header_right{
+	padding-top:20px;
+	padding-left:26%;
+}
+
+#header_right a, #header_right a:active, #header_right a:visited{
+	padding-right:30px;
+	text-decoration:none;
+	color:#2E2C2D;	
+}

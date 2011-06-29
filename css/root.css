@@ -1,0 +1,14 @@
+@import url("main.css");
+@import url("header.css");
+@import url("footer.css");
+@import url("index.css");
+@import url("secondary.css");
+
+@font-face{ font-family: LatoLight; src: url("Lato/Lato-Light.ttf"); }
+@font-face{ font-family: LatoRegular; src: url("Lato/Lato-Regular.ttf"); }
+@font-face{ font-family: Lato; font-style:italic; src: url("Lato/Lato-Italic.ttf"); }
+@font-face{ font-family: Lato; font-weight:bold; font-style:italic; src: url("Lato/Lato-BoldItalic.ttf"); }
+
+/*
+@import url("old.css"); 
+*/

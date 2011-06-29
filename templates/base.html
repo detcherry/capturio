@@ -2,17 +2,18 @@
 <html>
     <head>
         <title>Capturio</title>
-		<link type="text/css" rel="stylesheet" href="/css/main.css" />
+		<link type="text/css" rel="stylesheet" href="/css/root.css" />
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     </head>
     <body>
 		<header>
 			<div id="header_left">
-				<h1>Capturio</h1>
+				<img src="/images/logo_capturio.png"><h1><a href="/">Capturio</a></h1>
 				<h2>Capture people you meet</h2>
 			</div>
 			<div id="header_right">
 				{% block header_right %}
+					{% include "menu.html" %}
 				{% endblock %}
 			</div>
 		</header>
