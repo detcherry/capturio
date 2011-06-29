@@ -116,39 +116,14 @@ class PostCapturioHandler(InboundMailHandler):
 			if(not(self.imageContent) and not(self.vcardContent)):
 				self.responseHandler.sendResponse("noImageNoVcard")
 			else:
-				self.saveUsertemp()
+				self.dispatchAccordingToRecognition()
 		else:
 			self.responseHandler.sendResponse("error")
 	
- 	# It's high time saving the user with its new information in an entity called "usertemp"
-	def saveUsertemp(self):
+	def dispatchAccordingToRecognition(self):
 		
-		# Retrieval of information concerning the mail sender
-		existingUser = None
-		user_query = User.all().filter("mail", self.senderMail)
-		existingUser = user_query.get()	
-		
-		try:
-			existingUserImage = existingUser.imageRef
-		except AttributeError, e:
-			existingUserImage = None
-		try:
-			existingUserVcard = existingUser.vcardRef
-		except AttributeError, e:
-			existingUserVcard = None
-			
-		if(existingUser):
-			logging.info("User already existed")
-		else:
-			logging.info("User didn't exist before")
-			
-		#-------------------------------------------------------------
-			
-		newUser = Usertemp()
-		newUser.label = self.senderLabel
-		newUser.mail = db.Email(self.senderMail)
-				
-		if(self.imageContent):		
+		#If there is an image, we have to figure out if it's already in Moodstocks DB
+		if(self.imageContent):
 			
 			# Image insertion in the blobstore
 			file_name = files.blobstore.create(mime_type='image/jpeg')
@@ -157,57 +132,179 @@ class PostCapturioHandler(InboundMailHandler):
 			files.finalize(file_name)
 			self.blobKey = files.blobstore.get_blob_key(file_name)
 			logging.info("Blobkey: "+str(self.blobKey))
+		
+			if(self.imageInMoodstocksDB()):
+				logging.info("Moodstocks assumes the image is already in the database") 
+				
+				# We delete the image from the blobstore
+				blobstore.delete(self.blobKey)
+				
+				self.responseHandler.sendResponse("imageInMoodstocksDatabase")
+			else:
+				logging.info("Image passed the Moodstocks test")
+				self.saveUser()			
 			
-			# ImageRef insertion in the datastore
-			imageRef = ImageStorage()
-			imageRef.blobKey = self.blobKey
-			imageRef.put()
+		else:
+			logging.info("No image => No Moodstocks test necessary")
+			self.saveUser()		
+		
+	def imageInMoodstocksDB(self):
+		
+		self.imageURL = images.get_serving_url(self.blobKey)
+		logging.info("URL generated for new image: " + self.imageURL)
+		
+		self.moodstocksHandler = Moodstocks()
+		searchResponse = self.moodstocksHandler.lookForObject(self.imageURL)
+				
+		presenceInDB = searchResponse[0]
+		
+		return presenceInDB	
+	
+ 	# It's high time saving the user with its new information (if info is replacing existing data, need to send a confirmation email)
+	def saveUser(self):
+		
+		# Retrieval of information concerning the mail sender
+		userQuery = User.all().filter("mail", self.senderMail)
+		userQueryResult = userQuery.get()	
+		
+		if(userQueryResult):
+			user = userQueryResult
+		else:
+			user = User()
+			user.label = self.senderLabel
+			user.mail = db.Email(self.senderMail)
+		
+		# Was there already an image in the DB?
+		try:
+			userImage = user.imageRef
+		except AttributeError, e:
+			userImage = None
+		if(userImage):
+			self.statusImage = "alreadyExisted"
+		else:
+			self.statusImage = "didNotExist"
+		logging.info("status Image: "+ self.statusImage)	
+			
+		# Was there already a vcard in the DB?
+		try:
+			userVcard = user.vcardRef
+		except AttributeError, e:
+			userVcard = None
+		if(userVcard):
+			self.statusVcard = "alreadyExisted"			
+		else:
+			self.statusVcard = "didNotExist"
+		logging.info("status Vcard: "+self.statusVcard)
+						
+		# There are 2 different post requests
+		# - no information replaced (information just added) => INFORMATION EMAIL
+		# - some information replaced => CONFIRMATION EMAIL WITH A LINK
+		
+		# In the first case, there are 3 different situations
+		# - SignupWithImageAndVcard: vcard:(True & didNotExist) & image:(True & didNotExist)
+		# - SignupWithImage: vcard:(False & ...) & image:(True & didNotExist)
+		# - SignupWithVcard: vcard:(True & didNotExist) & image:(False & ...)
+		# In the second case, we just send a confirmation email saying: "new information in your account, please confirm"
+		
+		# SignupWithImageAndVcard
+		if((self.vcardContent) and (self.statusVcard == "didNotExist") and (self.blobKey) and (self.statusImage == "didNotExist")):
+
+			logging.info("SignupWithImageAndVcard")
+		
+			# VcardRef insertion in the user entity
+			user.vcardRef = self.insertVcard()
+				
+			# ImageRef insertion in the user entity
+			user.imageRef = self.insertImage()
+
+			user.put()
+			logging.info("User has been saved")
+			self.responseHandler.sendResponse("signupWithImageAndVcard")
+		
+		# SignupWithImage
+		elif(not(self.vcardContent) and (self.blobKey) and (self.statusImage == "didNotExist")):
+
+			logging.info("SignupWithImage")
 			
 			# ImageRef insertion in the user entity
-			imageRefKey = imageRef.key()
-			newUser.imageRef = imageRefKey
+			user.imageRef = self.insertImage()
+			user.put()
+			logging.info("User has been saved")
 			
-			# Image insertion in Moodstocks DB
-			imageRefID = str(imageRefKey.id())
-			self.imageURL = images.get_serving_url(self.blobKey)
-			moodstocksHandler = Moodstocks()
-			moodstocksHandler.addObject(imageRefID, self.imageURL)
-			
-			self.statusImage = "justAdded"
-		else:
-			if(existingUserImage):
-				self.statusImage = "isThere"
+			if(not(user.vcardRef)):
+				typeOfResponse = "signupWithImageVcardMissing"
 			else:
-				self.statusImage = "stillMissing"
-		logging.info("statusImage: %s", self.statusImage)
+				typeOfResponse = "signupWithImageVcardAlreadyThere"
+			
+			self.responseHandler.sendResponse(typeOfResponse)
+		
+		# SignupWithVcard
+		elif(not(self.blobKey) and (self.vcardContent) and (self.statusVcard == "didNotExist")):
+			
+			logging.info("SignupWithVcard")
+			
+			# VcardRef insertion in the user entity
+			user.vcardRef = self.insertVcard()
+			user.put()
+			logging.info("User has been saved")
+			
+			if(not(user.imageRef)):
+				typeOfResponse = "signupWithVcardImageMissing"
+			else:
+				typeOfResponse = "signupWithVcardImageAlreadyThere"
+			
+			self.responseHandler.sendResponse(typeOfResponse)			
+					
+		# Some information is replaced. We create a Usertemp entity
+		else:
+			newUser = Usertemp()
+			newUser.label = self.senderLabel
+			newUser.mail = db.Email(self.senderMail)
+				
+			if(self.blobKey):		
+				newUser.imageRef = self.insertImage()
 
-		if(self.vcardContent):
-			
-			vcard = VcardStorage()
-			vcard.name = self.vcardName
-			try:
-				vcard.content = self.vcardContent		
-			except:
-				logging.info("We have to encode it in UTF-8")
-				vcard.content = self.vcardContent.encode("utf-8")
-			vcard.put()
-			
-			vcardKey = vcard.key()
-			newUser.vcardRef = vcardKey
-			self.statusVcard = "justAdded"
-		else:
-			if(existingUserVcard):
-				self.statusVcard = "isThere"
-			else:
-				self.statusVcard = "stillMissing"
-		logging.info("statusVcard: %s", self.statusVcard)
+			if(self.vcardContent):
+				newUser.vcardRef = self.insertVcard()
 		
-		newUser.put()
-		logging.info("Usertemp has been saved")
+			newUser.put()
+			logging.info("Usertemp has been saved")
 		
-		self.buildResponseMailType(str(newUser.key().id()))
+			self.buildConfirmationMail(str(newUser.key().id()))
 	
-	def buildResponseMailType(self,usertempID):
+	# This function adds the vcard to the datastore
+	def insertVcard(self):
+		
+		# Vcard insertion
+		vcard = VcardStorage()
+		vcard.name = self.vcardName
+		try:
+			vcard.content = self.vcardContent		
+		except:
+			logging.info("We have to encode it in UTF-8")
+			vcard.content = self.vcardContent.encode("utf-8")
+		vcard.put()
+		
+		vcardKey = vcard.key()
+		return vcardKey
+		
+	# This function adds an imageRef to the datastore and the image to the Moodstocks DB	
+	def insertImage(self):
+		
+		# Image insertion in the datastore
+		imageRef = ImageStorage()
+		imageRef.blobKey = self.blobKey
+		imageRef.put()
+		
+		# Image insertion in Moodstocks DB
+		imageRefKey = imageRef.key()
+		imageRefID = str(imageRefKey.id())
+		moodstocksHandler = Moodstocks()
+		moodstocksHandler.addObject(imageRefID, self.imageURL)
+		
+		return imageRefKey
+
+	def buildConfirmationMail(self,usertempID):
 		
 		encryptedID = Encryption.getEncryptedIDForConfirmation(usertempID)
 		
@@ -218,22 +315,7 @@ class PostCapturioHandler(InboundMailHandler):
 		url = site_url + "confirm?id=%s&crypt=%s" % (usertempID, encryptedID)
 		logging.info("Confirmation URL: %s", url)
 		
-		if(self.blobKey):
-			if(self.vcardContent):
-				typeOfResponse = "newImageNewVcard"
-			else:
-				if(self.statusVcard == "stillMissing"):
-					typeOfResponse = "newImageNoVcardAndMissing"
-				else:
-					typeOfResponse = "newImageNoVcardButOk"
-		else:
-			if(self.statusImage == "stillMissing"):
-				typeOfResponse = "noImageAndMissingNewVcard"
-			else:
-				typeOfResponse = "noImageButOkNewVcard"
-		
-		logging.info("Type of the change: %s", typeOfResponse)
-		self.responseHandler.sendResponse(typeOfResponse, url)
+		self.responseHandler.sendResponse("informationReplaced", url)
 
 application = webapp.WSGIApplication([PostCapturioHandler.mapping()], debug=True)
 
