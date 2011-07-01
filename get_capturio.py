@@ -87,9 +87,20 @@ class GetCapturioHandler(InboundMailHandler):
 			with files.open(file_name, 'a') as f:
 				f.write(imageContent)
 			files.finalize(file_name)
-			self.blobKey = files.blobstore.get_blob_key(file_name)
-			logging.info("Blobkey: "+str(self.blobKey))
 			
+			# Sometimes blobKey is None
+			self.blobKey = files.blobstore.get_blob_key(file_name)
+			
+			# We have to make it wait til it works!
+			for i in range(1,3):	
+				if(self.blobKey):
+					break
+				else:
+					logging.info("BlobKey is still None")
+					time.sleep(0.05)
+					self.blobKey = files.blobstore.get_blob_key(file_name)
+			
+			logging.info("Blobkey: "+str(self.blobKey))
 			self.dispatchAccordingToRecognition()
 		else:
 			logging.info("Image extension invalid")
