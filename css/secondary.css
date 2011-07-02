@@ -1,25 +1,30 @@
 /* ------- GENERAL STYLE OF SECONDARY PAGES ------- */
 
-#secondary_section{
+.secondary_block{
 	width:100%;
 }
 
-#secondary_section h1{
+.secondary_block h1{
 	float:left;
 	width:100%;
 	margin-top:40px;
 	color:#FF706A;
 }
 
-#secondary_section #text{
+.secondary_block .text{
 	width:55%;
 }
 
-#secondary_section h2{
+.secondary_block img{
+	float:left;
+	width:40%;
+}
+
+.secondary_block h2{
 	margin-top:30px;
 }
 
-#secondary_section span{
+.secondary_block span{
 	color:#FF706A;
 }
 

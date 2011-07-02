@@ -4,6 +4,8 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 from google.appengine.ext.webapp import template
 
+from config import Config
+
 class MainPage(webapp.RequestHandler):
 	def get(self):
 		path = os.path.join(os.path.dirname(__file__), 'templates/index.html')
@@ -20,9 +22,13 @@ class HowToGetSetUp(webapp.RequestHandler):
 		self.response.out.write(template.render(path, None))
 
 class UseCases(webapp.RequestHandler):
-	def get(self):
-		path = os.path.join(os.path.dirname(__file__), 'templates/use_cases.html')
-		self.response.out.write(template.render(path, None))
+	def get(self):		
+		path = os.path.join(os.path.dirname(__file__), "templates/use_cases.html")
+		
+		config = Config()
+		self.response.out.write(template.render(path, {
+			"site_url": config.site_url,
+		}))
 
 class ComingFeatures(webapp.RequestHandler):
 	def get(self):

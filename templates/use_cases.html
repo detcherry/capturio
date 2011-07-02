@@ -1,20 +1,39 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div id="secondary_section">
-	<div id="text">
+<div class="secondary_block">
+	<div class="text">
 		<h1>WHO IS USING CAPTURIO?</h1>
 		<p>
 			Entrepreneurs, developers, designers link their business cards, logos, visuals.
 			  Some even add their t-shirts or tattoos! Capturio is limitless.<br/>
-			<span>Take a look of who's using Capturio for fun as well as serious purposes</span>
-		</p>
-		<h2>Mc LOVIN, HAWAIAN ORGAN DONOR</h2>
-		<p>
-			Mc Lovin shows his driving license when cops pull him over. 
-			Thanks to Capturio, Mc Lovin can easily catch up with his buddies and have some beers with them<br/>
-			<span>Take a pic of Mc Lovin's capturio object to get in touch with him</span>
+			<span>Send a pic of the capturio objects below to <strong>get@captur.io</strong> and instantly receive the person's vcard!</span>
 		</p>
 	</div>
 </div>
+<div class="secondary_block" id="1">
+	<div class="text">
+		<h2>PERSON 1</h2>
+		<p>
+			Blabla PERSON 1<br/>
+			<span>Take a pic of PERSON 1</span>
+		</p>
+		<a href="http://twitter.com/share" class="twitter-share-button" data-url="{{ site_url }}use_cases#1" data-text="Awesome, French designer turns his French ID into a business card" data-count="horizontal" data-via="capturio">Tweet</a>
+	</div>
+	<img src="/images/louis.png">
+</div>
+<div class="secondary_block" id="2">
+	<div class="text">
+		<h2>PERSON 2</h2>
+		<p>
+			Blabla PERSON 2<br/>
+			<span>Take a pic of PERSON 2</span>
+		</p>
+		<a href="http://twitter.com/share" class="twitter-share-button" data-url="{{ site_url }}use_cases#2" data-text="Awesome, Superman turns his chest into a business card" data-count="horizontal" data-via="capturio">Tweet</a>
+	</div>
+	<img src="/images/superman.png">
+</div>
+
+<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+
 {% endblock %}
