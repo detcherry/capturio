@@ -6,7 +6,7 @@ class GetMailHandler():
 	
 	def __init__(self, senderMail):
 		self.responseMail = mail.EmailMessage(
-			sender = "Capturio's crew <crew@captur.io>",
+			sender = "Capturio crew <crew@captur.io>",
 			to = senderMail
 		)
 	
