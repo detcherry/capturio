@@ -10,7 +10,7 @@ class GetMailHandler():
 			to = senderMail
 		)
 	
-	def sendResponse(self, typeOfResponse, attachments = None, url = None):
+	def sendResponse(self, typeOfResponse, attachments = None):
 		if(typeOfResponse == "noAttachment"):
 			self.responseMail.subject = "We didn't find any ID image in your last email"
 			self.responseMail.body = """			
@@ -27,7 +27,7 @@ We're sorry but we received too many files from you. For the moment, we only pro
 We're sorry but we did not recognize the extension of your image. Please make sure to send a .jpeg/.jpg , .png or .gif image.		
 			"""				
 		elif(typeOfResponse == "noMatchingImage"):
-			self.responseMail.subject = "We didn't find any vcard associated with your image"
+			self.responseMail.subject = "We don't know this image"
 			self.responseMail.body = """
 We're sorry but we don't know this image. Please retry with a picture with more light and/or precision.
 			"""
@@ -40,9 +40,7 @@ We're sorry but the user matching your image did not associate any vcard. We'll 
 			self.responseMail.subject = "[Capturio rocks] Please find attached the vcard you requested"
 			self.responseMail.body = """
 Please find attached the vcard associated with the image you sent earlier. Isn't it magical? Feel free to send us other images. 
-
-If this is not the right vcard (more than exceptional), please click the following link to report it: %s. Our team will take a look at it ASAP. Thanks for helping us improve our service.
-			""" % (url)
+			""" 
 			self.responseMail.attachments = attachments	
 		elif(typeOfResponse == "error"):
 			self.responseMail.subject = "An error occurred"
@@ -56,9 +54,9 @@ Hey,
 		signature = """
 Ping us soon again!
 
-Captur.io's crew
+Captur.io crew
 
-PS: If your vcard is not associated yet with your ID, send both to post@captur.io. For more information, go to http://captur.io		
+PS: If your vcard is not associated yet with one of your personal object, just send both to post@captur.io. For more information, go to http://captur.io		
 		"""
 
 		self.responseMail.body = hello + self.responseMail.body + signature	
@@ -67,23 +65,19 @@ PS: If your vcard is not associated yet with your ID, send both to post@captur.i
 		logging.info("responseMail sent")
 		
 		
-	def sendAlert(self, typeOfResponse, attachments = None, url = None, label = None, mail = None):
+	def sendAlert(self, typeOfResponse, attachments = None, label = None, mail = None):
 
 		if(typeOfResponse == "justCapturedRequesterWithVcard"):
-			self.responseMail.subject = "You have been captured by another person on Captur.io"
+			self.responseMail.subject = "[Vcard attached] You have been captured by another person on Captur.io"
 			self.responseMail.body = """
-The following person: %s (%s) captured you with Capturio! He just receives your vcard because you have probably shown him your ID! Please find also attached his own vcard.
-
-If you think there is an error, please click the following link to report it: %s. Our team will take a look at it ASAP. Thanks for helping us improve our service.
-			""" % (label, mail, url)
+The following person: %s (%s) captured you with Capturio! He just receives your vcard because you have probably shown him your Capturio object! Please find also attached his own vcard.
+			""" % (label, mail)
 			self.responseMail.attachments = attachments		
 		elif(typeOfResponse == "justCapturedRequesterWithoutVcard"):
 			self.responseMail.subject = "You have been captured by another person on Captur.io"
 			self.responseMail.body = """
-The following person: %s (%s) captured you with Capturio! He just receives your vcard because you have probably shown him your ID!
-
-If you think there is an error, please click the following link to report it: %s. Our team will take a look at it ASAP. Thanks for helping us improve our service.
-			""" % (label, mail, url)
+The following person: %s (%s) captured you with Capturio! He just receives your vcard because you have probably shown him your Capturio object!
+			""" % (label, mail)
 	
 		hello = """
 Hey,
@@ -91,7 +85,7 @@ Hey,
 		signature = """
 Ping us soon again!
 
-Capturio's crew
+Capturio crew
 		"""
 
 		self.responseMail.body = hello + self.responseMail.body + signature	

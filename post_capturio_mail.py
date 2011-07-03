@@ -73,7 +73,7 @@ We're sorry but an error occurred. Please retry in a couple of minutes.
 		signature = """
 Ping us soon again!
 
-Capturio's crew
+Capturio crew
 		"""
 
 		self.responseMail.body = hello + self.responseMail.body + signature

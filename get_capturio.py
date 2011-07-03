@@ -15,10 +15,8 @@ from models.vcard_storage import VcardStorage
 from models.image_storage import ImageStorage
 from models.image_recognition import ImageRecognition
 
-from config import Config
 from incoming_mail import IncomingMailHandler
 from get_capturio_mail import GetMailHandler
-from encryption import Encryption
 from moodstocks import Moodstocks
 
 class GetCapturioHandler(InboundMailHandler):
@@ -201,38 +199,19 @@ class GetCapturioHandler(InboundMailHandler):
 		requesterAttachment = (self.requestedVcardName, self.requestedVcardContent)
 		requesterAttachments = [requesterAttachment]
 		
-		conf = Config()
-		site_url = conf.site_url
-		
-		# We encrypt the recognition ID for the error reporting URL for the requester
-		encryptedIDForRequester = Encryption.getEncryptedIDForRequesterError(recognitionID)
-		logging.info("Encrypted ID for Requester: %s" % encryptedIDForRequester)
-		
-		urlForRequester = site_url + "reportrequester?id=%s&crypt=%s" % (recognitionID, encryptedIDForRequester)
-		logging.info("URL that the requester can use to report an error: %s", urlForRequester)
-		
-		self.responseHandler.sendResponse("vcardAttached", requesterAttachments, urlForRequester)
+		self.responseHandler.sendResponse("vcardAttached", requesterAttachments)
 		
 		#----------------------------
 		
 		self.alertRecognition = GetMailHandler(self.requestedMail)
 		
-		# We encrypt the recognition ID for the error reporting URL for the requester
-		encryptedIDForRequested = Encryption.getEncryptedIDForRequestedError(recognitionID)
-		logging.info("Encrypted ID for Requested: %s" % encryptedIDForRequested)
-		
-		urlForRequested = site_url + "reportrequested?id=%s&crypt=%s" % (recognitionID, encryptedIDForRequested)
-		logging.info("URL that the requested can use to report an error: %s", urlForRequested)	
-		
 		# We now instantiate the attachment for the requested 
 		if((self.requesterVcardName) and (self.requesterVcardContent)):
 			requestedAttachment = (self.requesterVcardName, self.requesterVcardContent)
 			requestedAttachments = [requestedAttachment]
-		
-			self.alertRecognition.sendAlert("justCapturedRequesterWithVcard", requestedAttachments, urlForRequested, self.requesterLabel, self.requesterMail)
-		
+			self.alertRecognition.sendAlert("justCapturedRequesterWithVcard", requestedAttachments, self.requesterLabel, self.requesterMail)
 		else:
-			self.alertRecognition.sendAlert("justCapturedRequesterWithoutVcard", None, urlForRequested, self.requesterLabel, self.requesterMail)
+			self.alertRecognition.sendAlert("justCapturedRequesterWithoutVcard", None, self.requesterLabel, self.requesterMail)
 						
 	
 application = webapp.WSGIApplication([GetCapturioHandler.mapping()], debug=True)
