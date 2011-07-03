@@ -55,12 +55,12 @@ Your vcard has just been added to your Capturio profile. Send now your image to 
 		elif(typeOfResponse == "signupWithVcardImageAlreadyThere"):
 			self.responseMail.subject = "[Confirmation] New vcard in your Capturio profile. You're now all set!"
 			self.responseMail.body = """
-Your vcard has just been added to your Capturio profile. You're now all set! You can start let people take a pic of your Capturio object and send it to get@captur.io. They receive instantly your vcard!
+Your vcard has just been added to your Capturio profile. You're now all set! You can start let people take a pic of your Capturio object and send it to get@captur.io. They will receive instantly your vcard!
 			"""		
 		elif(typeOfResponse == "informationReplaced"):
 			self.responseMail.subject = "[Confirmation] New information in your Capturio profile"
 			self.responseMail.body = """
-New information has just been saved into your Capturio profile. Please, click the following link to confirm (if you do so, old data will be replaced): %s
+New information has just been sent into your Capturio profile. Please, click the following link to confirm (if you do so, old data will be replaced): %s
 			""" % (URL)	
 		elif(typeOfResponse == "error"):
 			self.responseMail.subject = "An error occurred"
