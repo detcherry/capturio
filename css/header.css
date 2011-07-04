@@ -12,8 +12,9 @@ header{
 
 #header_left img{
 	float:left;
-	margin-right:4px;
-	padding-top:1px;
+	width:28px;
+	margin-right:6px;
+	padding-top:7px;
 }
 
 #header_left h1{
