@@ -90,7 +90,7 @@ class GetCapturioHandler(InboundMailHandler):
 			self.blobKey = files.blobstore.get_blob_key(file_name)
 			
 			# We have to make it wait til it works!
-			for i in range(1,3):	
+			for i in range(1,5):	
 				if(self.blobKey):
 					break
 				else:
