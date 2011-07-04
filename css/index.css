@@ -55,10 +55,20 @@ h1#tagline{
 	width:100px;
 }
 
+/* ------ HOME IMAGE ------- */
+
+img#t_shirt_damien{
+	top:0px;
+	left:0px;
+	position:absolute;
+	z-index:-100;
+}
 
 /*---- CATCH PHRASE BELOW PICTURE ----*/
 
 #explanations_section{
+	padding-top:40px;
+	padding-bottom:20px;
 	width:100%;
 }
 
