@@ -41,7 +41,7 @@ class DeleteCapturioHandler(InboundMailHandler):
 			logging.info("%s" % url)
 			
 			self.responseMail = mail.EmailMessage(
-				sender = "Capturio's crew <crew@captur.io>",
+				sender = "Capturio crew <crew@captur.io>",
 				to = self.senderMail,
 				subject = "[Deletion] Please confirm to remove your information from Captur.io",
 				body = """
@@ -51,7 +51,7 @@ If you want to remove all your information from Captur.io, please click on the f
 
 We hope to see you again soon!
 
-Captur.io's crew
+Captur.io crew
 				""" % (url)
 			)
 			

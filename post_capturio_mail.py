@@ -71,7 +71,7 @@ We're sorry but an error occurred. Please retry in a couple of minutes.
 		hello = """Hey,
 """
 		signature = """
-Ping us soon again!
+Ping us again, soon!
 
 Capturio crew
 		"""

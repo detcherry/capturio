@@ -52,11 +52,11 @@ We're sorry but an error occurred. Please retry in a couple of minutes.
 Hey,
 		"""
 		signature = """
-Ping us soon again!
+Ping us again, soon!
 
 Captur.io crew
 
-PS: If your vcard is not associated yet with one of your personal object, just send both to post@captur.io. For more information, go to http://captur.io		
+PS: If your vcard is not associated yet with one of your personal objects, just send both to post@captur.io. For more information, go to http://captur.io		
 		"""
 
 		self.responseMail.body = hello + self.responseMail.body + signature	
@@ -70,13 +70,13 @@ PS: If your vcard is not associated yet with one of your personal object, just s
 		if(typeOfResponse == "justCapturedRequesterWithVcard"):
 			self.responseMail.subject = "[Vcard attached] You have been captured by another person on Captur.io"
 			self.responseMail.body = """
-The following person: %s (%s) captured you with Capturio! He just receives your vcard because you have probably shown him your Capturio object! Please find also attached his own vcard.
+The following person: %s (%s) captured you with Capturio! He just received your vcard because you have probably shown him your Capturio object! Please find also attached his own vcard.
 			""" % (label, mail)
 			self.responseMail.attachments = attachments		
 		elif(typeOfResponse == "justCapturedRequesterWithoutVcard"):
 			self.responseMail.subject = "You have been captured by another person on Captur.io"
 			self.responseMail.body = """
-The following person: %s (%s) captured you with Capturio! He just receives your vcard because you have probably shown him your Capturio object!
+The following person: %s (%s) captured you with Capturio! He just received your vcard because you have probably shown him your Capturio object!
 			""" % (label, mail)
 	
 		hello = """
