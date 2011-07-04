@@ -10,7 +10,7 @@ class GetMailHandler():
 			to = senderMail
 		)
 	
-	def sendResponse(self, typeOfResponse, attachments = None):
+	def sendResponse(self, typeOfResponse, attachments = None, label = None, mail = None):
 		if(typeOfResponse == "noAttachment"):
 			self.responseMail.subject = "We didn't find any ID image in your last email"
 			self.responseMail.body = """			
@@ -39,8 +39,8 @@ We're sorry but the user matching your image did not associate any vcard. We'll 
 		elif(typeOfResponse == "vcardAttached"):
 			self.responseMail.subject = "[Capturio rocks] Please find attached the vcard you requested"
 			self.responseMail.body = """
-Please find attached the vcard associated with the image you sent earlier. Isn't it magical? Feel free to send us other images. 
-			""" 
+User: %s (%s) has been recognized. Please find attached his vcard. Isn't it magical? Feel free to send us other images. 
+			""" % (label, mail)
 			self.responseMail.attachments = attachments	
 		elif(typeOfResponse == "error"):
 			self.responseMail.subject = "An error occurred"

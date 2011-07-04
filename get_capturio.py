@@ -199,7 +199,7 @@ class GetCapturioHandler(InboundMailHandler):
 		requesterAttachment = (self.requestedVcardName, self.requestedVcardContent)
 		requesterAttachments = [requesterAttachment]
 		
-		self.responseHandler.sendResponse("vcardAttached", requesterAttachments)
+		self.responseHandler.sendResponse("vcardAttached", requesterAttachments, self.requestedLabel, self.requestedMail)
 		
 		#----------------------------
 		
