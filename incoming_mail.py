@@ -4,7 +4,7 @@ from incoming_image import IncomingImageHandler
 
 class IncomingMailHandler():
 	
-	# sender: string - total string representing the sender mail address and (if found) his name
+	# mailWithLabel: string - total string representing the sender mail address and (if found) his name
 	# attachments: list of tuple, 1st element of the tuple: filename, 2nd element of tuple: filecontent
 	
 	def __init__(self, mailWithLabel, attachments):
