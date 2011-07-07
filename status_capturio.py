@@ -78,9 +78,9 @@ Capturio Crew
 			self.responseMail.body = """
 Hey,
 
-Please find attached the image you provided to Capturio.
+It looks like you didn't provide Capturio with any image
 
-Feel free to change this image if you want: just email a new image at post@captur.io
+Feel free to add an image to Capturio: just email it at post@captur.io 
 
 Ping us again, soon!
 
