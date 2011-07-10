@@ -36,6 +36,11 @@ We're sorry but we don't know this image. Please retry with a picture with more 
 			self.responseMail.body = """
 We're sorry but the user matching your image did not associate any vcard. We'll ping him so that he'll input this information!
 			"""	
+		elif(typeOfResponse == "infoNotConfirmed"):
+			self.responseMail.subject = "The user recognized did not confirm his information"
+			self.responseMail.body = """
+We found an image matching yours. Yet, the user found did not confirm his information. Tell him he has to confirm this visual first in order to share his vcard.
+			"""
 		elif(typeOfResponse == "vcardAttached"):
 			self.responseMail.subject = "[Capturio rocks] Please find attached the vcard you requested"
 			self.responseMail.body = """

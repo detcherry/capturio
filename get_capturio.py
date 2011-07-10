@@ -189,7 +189,8 @@ class GetCapturioHandler(InboundMailHandler):
 			else:
 				self.responseHandler.sendResponse("noVcardAssociated")
 		else:
-			logging.warning("We found a Moodstocks ID but we didn't found a user matching it. There is something wrong somewhere...")
+			logging.warning("The user probably didn't confirm the info change")
+			self.responseHandler.sendResponse("infoNotConfirmed")
 		
 	# In this mail, we build the messages to the requester and the requested
 	def buildResponseMail(self, recognitionID):
