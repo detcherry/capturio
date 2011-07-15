@@ -1,15 +1,29 @@
-h1#tagline{
-	margin-top:50px;
-	margin-bottom:70px;
-	width:40%;
-	font-size:36px;
-	color:#FF706A;
+/* --- HEADER BAR -------*/
+
+#header_bar{
+	width:100%;
+	padding:8px;
+	position:fixed; 
+	text-align:center; 
+	background:#FFF2C6;
+	border-bottom:1px solid #7F8785;
 }
 
+/* ------- HEADER EDIT ------- */
+
+#header_content_wrapper{
+	margin-top:36px;
+	margin-left:10%;
+	width:80%;
+}
+
+/* ------ TRY SECTION ------ */
+
 #try_section{
-	width:37%;
-	margin-bottom:70px;
-	padding-left:3%;
+	margin-top:240px;
+	margin-left:10%;
+	margin-bottom:40px;
+	width:30%;
 }
 
 #try_section h1{
@@ -18,7 +32,7 @@ h1#tagline{
 	font-family: Lato, Helvetica, sans-serif;
 	font-size:22px;
 	font-style:italic;
-	font-weight:bold;
+	font-weight:bold;	
 }
 
 #try_section img{
@@ -41,6 +55,42 @@ h1#tagline{
 	font-weight:bold;	
 }
 
+/*------ SLIDESHOW ------- */
+
+#slideshow{
+	position:absolute;
+	width:100%;
+	overflow:hidden;
+	z-index:-1;
+}
+
+#slides_wrapper{
+	width:300%;
+}
+
+.slide{
+	width:33.33%;
+	height:1200px;
+	background:no-repeat center top;
+}
+
+.content{
+	margin:auto;
+	width:80%;
+	float:none;
+}
+
+h1.tagline{
+	margin-top:180px;
+	margin-bottom:80px;
+	width:40%;
+	font-size:36px;
+	color:#FF706A;
+}
+
+/*------ WIDGETS ----*/
+
+
 .fb_iframe_widget{
 	float:left;
 	margin-top:8px;
@@ -55,21 +105,18 @@ h1#tagline{
 	width:100px;
 }
 
-/* ------ HOME IMAGE ------- */
+/*---- EXPLANATION SECTION ----*/
 
-img#t_shirt_damien{
-	top:0px;
-	left:0px;
-	position:absolute;
-	z-index:-100;
+#explanations_section_wrapper{
+	width:100%;
+	background:rgba(255,255,255,0.6);
 }
 
-/*---- CATCH PHRASE BELOW PICTURE ----*/
-
 #explanations_section{
-	padding-top:40px;
-	padding-bottom:20px;
-	width:100%;
+	margin-left:10%;
+	padding-top:30px;
+	padding-bottom:10px;
+	width:80%;
 }
 
 #explanations_section h1{
@@ -79,14 +126,20 @@ img#t_shirt_damien{
 }
 
 h1#left{
-	padding:8px;
-	padding-left:23%;
+	margin-left:23%;
+	padding-top:8px;
+	padding-bottom:8px;
+	width:22%;
+	text-align:right;
 }
 
 h1#right{
 	margin-left:3%;
+	margin-right:16%;
+	width:28%;
 	padding:8px;
 	color:white;
+	text-align:center;
 	background-color:#FF706A;
 	-moz-border-radius: 8px;
 	-webkit-border-radius: 8px;
@@ -127,6 +180,18 @@ h1#right a:hover{
 	padding-left:10%;
 	padding-right:10%;
 	width:80%;
+}
+
+/* ----- FOOTER EDITS ------- */
+
+#footer_top_wrapper{
+	width:100%;
+	background: rgba(255,255,255,0.6);
+}
+
+#footer_bottom_wrapper{
+	width:100%;
+	background: white;
 }
 
 

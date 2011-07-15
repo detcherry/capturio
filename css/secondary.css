@@ -37,8 +37,6 @@ img.what_is_capturio{
 	width:12%;
 }
 
-
-
 /* ------------- TUTORIAL SECTION ---------------- */
 
 .tutorial{
@@ -89,6 +87,7 @@ img.what_is_capturio{
 	padding-top:16px;
 	padding-bottom:16px;
 	color:white;
+	font-size:1.5em;
 	background-color:#7F8785;
 	-moz-border-radius: 8px;
 	-webkit-border-radius: 8px;
