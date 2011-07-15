@@ -4,7 +4,7 @@ $(function(){
 });
 
 function Animation(){
-	this.interval = 5000;
+	this.interval = 6000;
 	this.previousPosition = "";
 	this.currentPosition = "left";
 }
